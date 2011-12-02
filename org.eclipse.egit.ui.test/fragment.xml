@@ -15,5 +15,36 @@
           <test property="org.eclipse.core.resources.name" value="*.model" />
       </enablement>
    </extension>
+   <!-- ================================================================================ -->
+   <!-- Repository provider rovider for the GitImportWizardTest											 -->
+   <!-- ================================================================================ -->
+   <extension
+         point="org.eclipse.egit.ui.repositoryImportSource">
+      <source
+            label="ServerWithoutPage1"
+            hasFixLocation="true">
+      </source>
+      <repositoryServerProvider
+            class="org.eclipse.egit.ui.wizards.clone.TestRepositoryServerProvider">
+      </repositoryServerProvider>
+   </extension>
+   <extension
+         point="org.eclipse.egit.ui.repositoryImportSource">
+      <source
+            label="TestServer"
+            hasFixLocation="false">
+      </source>
+      <repositoryServerProvider
+            class="org.eclipse.egit.ui.wizards.clone.TestRepositoryServerProvider">
+      </repositoryServerProvider>
+      <repositoryImportPage
+            class="org.eclipse.egit.ui.wizards.clone.TestRepositorySearchPage"></repositoryImportPage>
+   </extension>
+   <extension
+         point="org.eclipse.egit.ui.repositoryImportSource">
+      <source
+            label="ServerWithoutPage2">
+      </source>
+   </extension>
 
 </fragment>
