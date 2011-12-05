@@ -33,6 +33,17 @@ public class GitImportRepoWizard {
 		bot.button("Next >").click();
 	}
 
+	public RepositoryLocationPage openWizard2() {
+		bot.menu("File").menu("Import...").click();
+		bot.shell("Import").activate();
+
+		bot.tree().expandNode("Git").select("Projects from Git2");
+
+		bot.button("Next >").click();
+		
+		return new RepositoryLocationPage();
+	}
+
 	public RepoPropertiesPage openCloneWizard() {
 		bot.shell("Import Projects from Git").activate();
 

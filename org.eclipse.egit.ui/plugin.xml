@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 <plugin>
    <extension-point id="commitMessageProvider" name="%CommitMessageProviderExtension-point.name" schema="schema/commitMessageProvider.exsd"/>
+   <extension-point id="repositoryImportSource" name="%RepositoryImportPageExtension-point.name" schema="schema/repositoryImportPage.exsd"/>
    <extension point="org.eclipse.core.runtime.preferences">
       <initializer class="org.eclipse.egit.ui.PluginPreferenceInitializer"/>
    </extension>
@@ -13,6 +14,17 @@
 	    icon="icons/obj16/import_obj.gif"
 	    class="org.eclipse.egit.ui.internal.clone.GitImportWizard"
 	    id="org.eclipse.egit.ui.internal.clone.GitCloneWizard"
+	    category="org.eclipse.egit.ui.internal.clone.gitclonecategory">
+	    <description>%Git_clone_description</description>
+      </wizard>
+   </extension>
+   <extension point="org.eclipse.ui.importWizards">
+      <category name="%Git_clone_category"
+	    id="org.eclipse.egit.ui.internal.clone.gitclonecategory"/>
+      <wizard name="%Git_import_wizard"
+	    icon="icons/obj16/import_obj.gif"
+	    class="org.eclipse.egit.ui.internal.clone.GitImportWizard2"
+	    id="org.eclipse.egit.ui.internal.clone.GitImportWizard2"
 	    category="org.eclipse.egit.ui.internal.clone.gitclonecategory">
 	    <description>%Git_clone_description</description>
       </wizard>
@@ -4214,5 +4226,14 @@
 			<property name="product" value="EGit"/>
 			<property name="component" value="Mylyn"/>
 		</mapping>
+  </extension>
+  <extension
+        point="org.eclipse.egit.ui.repositoryImportSource">
+     <source
+           hasFixLocation="true"
+           label="Custom URI">
+     </source>
+     <repositoryImportPage
+           class="org.eclipse.egit.ui.internal.components.RepositorySelectionPage"></repositoryImportPage>
   </extension>
 </plugin>
