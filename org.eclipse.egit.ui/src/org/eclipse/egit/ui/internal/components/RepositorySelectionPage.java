@@ -26,6 +26,8 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
+import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo;
+import org.eclipse.egit.ui.internal.provisional.wizards.IRepositorySearchResult;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -64,7 +66,7 @@ import org.eclipse.ui.PlatformUI;
  * Wizard page that allows the user entering the location of a remote repository
  * by specifying URL manually or selecting a preconfigured remote repository.
  */
-public class RepositorySelectionPage extends WizardPage {
+public class RepositorySelectionPage extends WizardPage implements IRepositorySearchResult {
 
 	private static final String EMPTY_STRING = "";  //$NON-NLS-1$
 
@@ -374,6 +376,13 @@ public class RepositorySelectionPage extends WizardPage {
 	public RepositorySelectionPage(final boolean sourceSelection,
 			String presetUri) {
 		this(sourceSelection, null, presetUri);
+	}
+
+	/**
+	 *
+	 */
+	public RepositorySelectionPage() {
+		this(true, null);
 	}
 
 	/**
@@ -999,6 +1008,10 @@ public class RepositorySelectionPage extends WizardPage {
 
 	private IPreferenceStore getPreferenceStore() {
 		return Activator.getDefault().getPreferenceStore();
+	}
+
+	public GitRepositoryInfo getGitRepositoryInfo() {
+		return new GitRepositoryInfo(uri);
 	}
 
 }
