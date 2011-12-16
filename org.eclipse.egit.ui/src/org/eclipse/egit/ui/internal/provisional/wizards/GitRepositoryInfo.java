@@ -7,8 +7,12 @@
  *
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
+ *    Sascha Scholz (SAP) - improvements
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.provisional.wizards;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 
@@ -26,20 +30,66 @@ public class GitRepositoryInfo {
 
 	private final String cloneUri;
 	private final UserPasswordCredentials credentials;
-	private String name;
+	private String repositoryName;
+	private List<String> fetchRefSpecs = new ArrayList<String>();
+
+	/** */
+	public static class PushInfo {
+		/** */
+		public String pushRefSpec;
+		/** */
+		public String pushUri;
+
+		/**
+		 * @param pushRefSpec
+		 * @param pushUri
+		 */
+		public PushInfo(String pushRefSpec, String pushUri) {
+			this.pushRefSpec = pushRefSpec;
+			this.pushUri = pushUri;
+		}
+	}
+	private List<PushInfo> pushInfos = new ArrayList<PushInfo>();
+
+	/** */
+	public static class RepositoryConfigProperty {
+		/** */
+		public String section;
+		/** */
+		public String subsection;
+		/** */
+		public String name;
+		/** */
+		public String value;
+
+		/**
+		 * @param section
+		 * @param subsection
+		 * @param name
+		 * @param value
+		 */
+		public RepositoryConfigProperty(String section, String subsection, String name, String value) {
+			this.section = section;
+			this.subsection = subsection;
+			this.name = name;
+			this.value = value;
+		}
+	}
+	private List<RepositoryConfigProperty> repositoryConfigProperties = new ArrayList<RepositoryConfigProperty>();
+
 
 	/**
 	 * @param cloneUri
 	 *            the URI where the repository can be cloned from
 	 * @param credentials
 	 *            the credentials needed for log in, may be null
-	 * @param name
+	 * @param repositoryName
 	 *            the name of the git repository
 	 */
-	public GitRepositoryInfo(String cloneUri, UserPasswordCredentials credentials, String name) {
+	public GitRepositoryInfo(String cloneUri, UserPasswordCredentials credentials, String repositoryName) {
 		this.cloneUri = cloneUri;
 		this.credentials = credentials;
-		this.name = name;
+		this.repositoryName = repositoryName;
 	}
 
 	/**
@@ -60,6 +110,57 @@ public class GitRepositoryInfo {
 	 * @return the name of the git repository
 	 */
 	public String getName() {
-		return name;
+		return repositoryName;
 	}
+
+	/**
+	 * Adds a fetch specification to the cloned repository
+	 * @param fetchRefSpec the fetch ref spec which will be added
+	 */
+	public void addFetchRefSpec(String fetchRefSpec) {
+		this.fetchRefSpecs.add(fetchRefSpec);
+	}
+
+	/**
+	 * @return the fetch ref specs
+	 */
+	public List<String> getFetchRefSpecs() {
+		return fetchRefSpecs;
+	}
+
+	/**
+	 * Adds a push information to the cloned repository
+	 * @param pushRefSpec the push ref spec which will be added
+	 * @param pushUri the push uri which will be added
+	 */
+	public void addPushInfo(String pushRefSpec, String pushUri) {
+		this.pushInfos.add(new PushInfo(pushRefSpec, pushUri));
+	}
+
+	/**
+	 * @return the push information
+	 */
+	public List<PushInfo> getPushInfos() {
+		return pushInfos;
+	}
+
+	/**
+	 * Add an entry in the configuration of the cloned repository
+	 *
+	 * @param section
+	 * @param subsection
+	 * @param name
+	 * @param value
+	 */
+	public void addRepositoryConfigProperty(String section, String subsection, String name, String value) {
+		repositoryConfigProperties.add(new RepositoryConfigProperty(section, subsection, name, value));
+	}
+
+	/**
+	 * @return the repository config property entries
+	 */
+	public List<RepositoryConfigProperty> getRepositoryConfigProperties() {
+		return repositoryConfigProperties;
+	}
+
 }
