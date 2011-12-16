@@ -1012,7 +1012,7 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 	}
 
 	public GitRepositoryInfo getGitRepositoryInfo() {
-		return new GitRepositoryInfo(uri.toString(), getCredentials());
+		return new GitRepositoryInfo(uri.toString(), getCredentials(), null);
 	}
 
 }

@@ -26,16 +26,20 @@ public class GitRepositoryInfo {
 
 	private final String cloneUri;
 	private final UserPasswordCredentials credentials;
+	private String name;
 
 	/**
 	 * @param cloneUri
 	 *            the URI where the repository can be cloned from
 	 * @param credentials
 	 *            the credentials needed for log in, may be null
+	 * @param name
+	 *            the name of the git repository
 	 */
-	public GitRepositoryInfo(String cloneUri, UserPasswordCredentials credentials) {
+	public GitRepositoryInfo(String cloneUri, UserPasswordCredentials credentials, String name) {
 		this.cloneUri = cloneUri;
 		this.credentials = credentials;
+		this.name = name;
 	}
 
 	/**
@@ -50,5 +54,12 @@ public class GitRepositoryInfo {
 	 */
 	public UserPasswordCredentials getCredentials() {
 		return credentials;
+	}
+
+	/**
+	 * @return the name of the git repository
+	 */
+	public String getName() {
+		return name;
 	}
 }
